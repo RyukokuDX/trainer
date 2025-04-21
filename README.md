@@ -13,19 +13,39 @@ GitHubは、ソフトウェア開発のためのプラットフォームです�
 
 ## 始め方
 
-1. GitHubアカウントを作成する
+1. Gitの初期設定を行う
+   - Windows (PowerShell推奨):
+     1. [Git for Windows](https://gitforwindows.org/)からインストーラーをダウンロード
+     2. インストーラーを実行し、デフォルト設定のまま「Next」を押してインストール
+     3. インストール完了後、スタートメニューから「Git GUI」を起動
+     4. 「Edit」→「Options」を選択
+     5. 以下の項目を設定：
+        - User Name: あなたの名前
+        - Email Address: あなたのメールアドレス
+     6. 「Save」をクリックして設定を保存
+
+   - WSL (Ubuntu):
+     ```bash
+     # Gitのインストール（未インストールの場合）
+     sudo apt update
+     sudo apt install git
+     ```
+
+   - macOS:
+     ```bash
+     # Gitのインストール（未インストールの場合）
+     brew install git
+     ```
+
+2. GitHubアカウントを作成する
    - [GitHub](https://github.com)にアクセス
    - 「Sign up」ボタンをクリック
    - 必要な情報を入力してアカウントを作成
 
-2. Cursorをインストールする
+3. Cursorをインストールする
    - [Cursor公式サイト](https://cursor.sh)からダウンロード
    - インストーラーを実行
    - GitHubアカウントでログイン
-
-3. このリポジトリをフォーク（コピー）する
-   - GitHubのウェブサイトでこのリポジトリを開く
-   - 右上の「Fork」ボタンをクリック
 
 4. リポジトリをクローンする
    - Cursorの「File」メニューから「Clone Repository」を選択
@@ -47,7 +67,7 @@ GitHubは、ソフトウェア開発のためのプラットフォームです�
 ### 1. 基本的な操作
 1. このリポジトリをクローン（ダウンロード）する
    - Cursorの「File」メニューから「Clone Repository」を選択
-   - リポジトリのURLを入力：`git@github.com:RyukokuDX/trainer.git`
+   - リポジトリのURLを入力：`https://github.com/RyukokuDX/trainer.git`
    - 保存先のフォルダを選択
 
 2. `{学籍番号}`フォルダを作成し、
@@ -146,7 +166,158 @@ GitHubは、ソフトウェア開発のためのプラットフォームです�
 
 - 練習用のリポジトリなので、自由に試してみてください
 - 間違えても大丈夫です。GitHubでは変更履歴が残るので、いつでも元に戻せます
-- 質問や不明な点があれば、イシューで質問してください
+- 質問や不明な点があれば、イシューで質問してください 
+
+## Cursorの設定
+
+### Markdown関連の設定
+
+Cursorでは、Markdownファイルの編集をサポートするための設定がいくつかあります。
+
+#### 1. プレビューの表示
+- `Ctrl + Shift + V`（Windows/Linux）または`Cmd + Shift + V`（macOS）でプレビューを表示
+- プレビューは右側に表示され、リアルタイムで更新されます
+
+#### 2. 拡張機能のインストール
+1. `Ctrl + Shift + X`（Windows/Linux）または`Cmd + Shift + X`（macOS）で拡張機能パネルを開く
+2. 以下の拡張機能を検索してインストール：
+   - `Markdown All in One`: Markdownの編集をサポート
+   - `markdownlint`: Markdownの文法チェック
+   - `Markdown Preview Enhanced`: 拡張されたプレビュー機能
+
+#### 3. 設定のカスタマイズ
+1. `Ctrl + ,`（Windows/Linux）または`Cmd + ,`（macOS）で設定を開く
+2. 以下の設定を推奨：
+   ```json
+   {
+     "markdown.preview.breaks": true,
+     "markdown.preview.doubleClickToSwitchToEditor": false,
+     "markdown.links.openLocation": "beside",
+     "markdown.validate.enabled": true,
+     "markdown.validate.fragmentLinks": true
+   }
+   ```
+
+#### 4. ショートカットキー
+- 見出しの追加: `Ctrl + Shift + 1`〜`6`（Windows/Linux）または`Cmd + Shift + 1`〜`6`（macOS）
+- 太字: `Ctrl + B`（Windows/Linux）または`Cmd + B`（macOS）
+- イタリック: `Ctrl + I`（Windows/Linux）または`Cmd + I`（macOS）
+- リストの追加: `Ctrl + Shift + L`（Windows/Linux）または`Cmd + Shift + L`（macOS）
+
+## GitHubの認証設定（ちょっと発展）
+
+GitHubでは、セキュリティを確保するために公開鍵認証を使用することを推奨しています。以下の手順で設定を行ってください。
+
+### 1. 公開鍵の生成と登録
+
+#### Windows (PowerShell)
+```powershell
+# SSHキーの生成
+ssh-keygen -t ed25519 -C "あなたのメールアドレス"
+
+# 生成された公開鍵の表示
+cat ~/.ssh/id_ed25519.pub
+
+# 表示された公開鍵をGitHubに登録
+# 1. GitHubの設定画面（Settings）を開く
+# 2. 左サイドバーの「SSH and GPG keys」を選択
+# 3. 「New SSH key」をクリック
+# 4. タイトルを入力（例：My Windows PC）
+# 5. 公開鍵を貼り付け
+# 6. 「Add SSH key」をクリック
+```
+
+#### Windows (WSL)
+```bash
+# SSHキーの生成
+ssh-keygen -t ed25519 -C "あなたのメールアドレス"
+
+# 生成された公開鍵の表示
+cat ~/.ssh/id_ed25519.pub
+
+# 表示された公開鍵をGitHubに登録
+# 1. GitHubの設定画面（Settings）を開く
+# 2. 左サイドバーの「SSH and GPG keys」を選択
+# 3. 「New SSH key」をクリック
+# 4. タイトルを入力（例：My WSL）
+# 5. 公開鍵を貼り付け
+# 6. 「Add SSH key」をクリック
+```
+
+#### macOS
+```bash
+# SSHキーの生成
+ssh-keygen -t ed25519 -C "あなたのメールアドレス"
+
+# 生成された公開鍵の表示
+cat ~/.ssh/id_ed25519.pub
+
+# 表示された公開鍵をGitHubに登録
+# 1. GitHubの設定画面（Settings）を開く
+# 2. 左サイドバーの「SSH and GPG keys」を選択
+# 3. 「New SSH key」をクリック
+# 4. タイトルを入力（例：My Mac）
+# 5. 公開鍵を貼り付け
+# 6. 「Add SSH key」をクリック
+```
+
+### 2. 接続テスト
+
+各OS共通で以下のコマンドを実行して接続をテストします：
+
+```bash
+ssh -T git@github.com
+```
+
+成功すると以下のメッセージが表示されます：
+```
+Hi username! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+### 3. SSHの設定ファイル
+
+複数のGitHubアカウントや、異なる環境からアクセスする場合は、SSHの設定ファイルを使用すると便利です。
+
+#### Windows (PowerShell/WSL) / macOS
+```bash
+# 設定ファイルの作成
+mkdir -p ~/.ssh
+touch ~/.ssh/config
+
+# 設定ファイルの編集
+# 以下の内容を追加：
+
+# GitHubのメインアカウント
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
+# GitHubの別アカウント（必要な場合）
+Host github-alt
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_alt
+    IdentitiesOnly yes
+```
+
+設定後、以下のように使用できます：
+```bash
+# メインアカウントの場合
+git clone git@github.com:RyukokuDX/trainer.git
+
+# 別アカウントの場合
+git clone git@github-alt:RyukokuDX/trainer.git
+```
+
+### 4. リポジトリのクローン方法
+
+公開鍵認証を使用する場合は、HTTPSではなくSSHのURLを使用します：
+
+```bash
+git clone git@github.com:RyukokuDX/trainer.git
+```
 
 ## 参考リンク
 
@@ -155,3 +326,4 @@ GitHubは、ソフトウェア開発のためのプラットフォームです�
 - [GitHubの使い方まとめ](https://qiita.com/items/656deb8d8cdf13fd590c)
 
 Happy Coding! 🚀 
+
